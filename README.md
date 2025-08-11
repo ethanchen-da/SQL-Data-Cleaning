@@ -2,6 +2,7 @@
 This is an educational project on data cleaning and preparation using SQL. The original database in CSV format is located in the file club_member_info.csv. Here, we will explore the steps that need to be applied to obtain a cleansed version of the dataset.
 
 
+
 |full_name|age|martial_status|email|phone|full_address|job_title|membership_date|
 |---------|---|--------------|-----|-----|------------|---------|---------------|
 |addie lush|40|married|alush0@shutterfly.com|254-389-8708|3226 Eastlawn Pass,Temple,Texas|Assistant Professor|7/31/2013|
@@ -28,3 +29,5 @@ This is an educational project on data cleaning and preparation using SQL. The o
 |Damaris Dioniso|34|married|ddionisol@utexas.edu|415-558-5275|5 Eagan Terrace,San Francisco,Kalifornia|Environmental Specialist|2/21/2012|
 |Luciana Calvey|52|divorced|lcalveym@biglobe.ne.jp|972-929-2731|288 Anzinger Parkway,Dallas,Texas|Nuclear Power Engineer|6/3/2022|
 |Danila Wiggans|43|married|dwiggansn@archive.org|202-702-7529|58796 Veith Avenue,Bethesda,Maryland|GIS Technical Architect|10/30/2021|
+
+Let's generate a new table where we can manipulate and restructure the data without modifying the original dataset
