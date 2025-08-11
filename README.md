@@ -30,4 +30,23 @@ This is an educational project on data cleaning and preparation using SQL. The o
 |Luciana Calvey|52|divorced|lcalveym@biglobe.ne.jp|972-929-2731|288 Anzinger Parkway,Dallas,Texas|Nuclear Power Engineer|6/3/2022|
 |Danila Wiggans|43|married|dwiggansn@archive.org|202-702-7529|58796 Veith Avenue,Bethesda,Maryland|GIS Technical Architect|10/30/2021|
 
+
+## Create a new table
+
 Let's generate a new table where we can manipulate and restructure the data without modifying the original dataset
+-- club_member_info definition
+
+CREATE TABLE club_member_info_cleaned (
+	full_name VARCHAR(50),
+	age INTEGER,
+	martial_status VARCHAR(50),
+	email VARCHAR(50),
+	phone NVARCHAR(50),
+	full_address NVARCHAR(50),
+	job_title VARCHAR(50),
+	membership_date NVARCHAR(50)
+);
+
+## Copy all values from original table
+INSERT INTO club_member_info_cleaned
+SELECT * FROM club_nember_info;
