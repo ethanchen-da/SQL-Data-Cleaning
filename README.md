@@ -36,7 +36,7 @@ This is an educational project on data cleaning and preparation using SQL. The o
 Let's generate a new table where we can manipulate and restructure the data without modifying the original dataset
 -- club_member_info definition
 
-CREATE TABLE club_member_info_cleaned (
+/CREATE TABLE club_member_info_cleaned (
 	full_name VARCHAR(50),
 	age INTEGER,
 	martial_status VARCHAR(50),
@@ -45,7 +45,7 @@ CREATE TABLE club_member_info_cleaned (
 	full_address NVARCHAR(50),
 	job_title VARCHAR(50),
 	membership_date NVARCHAR(50)
-);
+);/
 
 ## Copy all values from original table
 INSERT INTO club_member_info_cleaned
