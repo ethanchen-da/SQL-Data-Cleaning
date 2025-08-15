@@ -44,26 +44,26 @@ SELECT * FROM club_member_info;
 
 
 ## Clean Data
-In the first step, we should review all the data in the table
+1. In the first step, we should review all the data in the table
 ```sql
 SELECT * 
 FROM club_member_info;
 ```
 
-Fix the full_name column — check the result first
+2. Fix the full_name column — check the result first
 ```sql
 SELECT UPPER(SUBSTRING(LTRIM(full_name),1))
 FROM club_member_info;
 ```
 
-Fix, Update and Commit full_name column
+3. Fix, Update and Commit full_name column
 Result: I will adjust it so that all letters are capitalized and aligned to the left.
 ```sql
 UPDATE club_member_info
 SET full_name = UPPER(SUBSTR(LTRIM(full_name), 1));
 ```
 
-After that, I noticed that the age column had many missing values or outliers, so I fixed the age column.
+4. After that, I noticed that the age column had many missing values or outliers, so I fixed the age column.
 Result: I will replace the outliers with the most frequently occurring age, which is 40.
 ```sql
 WITH mode_val AS 
@@ -79,7 +79,7 @@ SET age = (SELECT age FROM mode_val)
 WHERE age < 1 OR age > 100 OR age IS NULL;
 ```
 
-After that, I noticed that the martial_status column had many missing values, so I fixed the age column.
+5. After that, I noticed that the martial_status column had many missing values, so I fixed the age column.
 Result: I will also replace the null values with the most frequently occurring value.
 ```sql
 WITH update_status AS 
@@ -94,14 +94,14 @@ UPDATE club_member_info
 SET  martial_status = (SELECT ms FROM update_status)
 WHERE TRIM(martial_status) IS NULL;
 ```
-However, to ensure that my results are logically consistent, I ran a query to check that individuals under the age of 16 do not have a marital_status of “married” or “divorced.”
+6. However, to ensure that my results are logically consistent, I ran a query to check that individuals under the age of 16 do not have a marital_status of “married” or “divorced.”
 ```sql
 SELECT martial_status
 FROM club_member_info
 WHERE age < 16 AND (martial_status IN ('married','divorced'));
 ```
 
-Then I noticed the phone column also had missing values, so I decided to check the results before updating to make sure nothing gets updated incorrectly. For this column, if a value is missing or incorrectly formatted, I’ll set it to 'ERROR' by default.
+7. Then I noticed the phone column also had missing values, so I decided to check the results before updating to make sure nothing gets updated incorrectly. For this column, if a value is missing or incorrectly formatted, I’ll set it to 'ERROR' by default.
 ```sql
 SELECT
 	CASE 
@@ -111,7 +111,7 @@ SELECT
 FROM club_member_info;
 ```
 
-After confirming the above query returned no issues, I ran the update command.
+8. After confirming the above query returned no issues, I ran the update command.
 ```sql
 UPDATE club_member_info
 SET phone = 
@@ -121,14 +121,14 @@ SET phone =
 	END;
 ```
 
-Check empty values in job_title column
+9. Check empty values in job_title column
 ```sql
 SELECT COUNT(job_title)
 FROM club_member_info
 WHERE LENGTH(TRIM(job_title)) < 1;
 ```
 
-Update job_title column, in this column, if the values are empty, I will default them to 'No Info'.
+10. Update job_title column, in this column, if the values are empty, I will default them to 'No Info'.
 ```sql
 UPDATE club_member_info
 SET job_title =
