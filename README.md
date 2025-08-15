@@ -91,7 +91,8 @@ UPDATE club_member_info
 SET  martial_status = (SELECT ms FROM update_status)
 WHERE TRIM(martial_status) IS NULL;
 ```
-Then I noticed the phone column also had missing values, so I decided to check the results before updating to make sure nothing gets updated incorrectly.
+
+Then I noticed the phone column also had missing values, so I decided to check the results before updating to make sure nothing gets updated incorrectly. For this column, if a value is missing or incorrectly formatted, I’ll set it to 'ERROR' by default.
 ```sql
 SELECT
 	CASE 
@@ -118,7 +119,7 @@ FROM club_member_info
 WHERE LENGTH(TRIM(job_title)) < 1;
 ```
 
-Update job_title column
+Update job_title column, in this column, if the values are empty, I will default them to 'No Info'.
 ```sql
 UPDATE club_member_info
 SET job_title =
