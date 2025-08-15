@@ -138,4 +138,7 @@ SET job_title =
 	END;
 ```
 ## Result
-[Uploading Club_member_info_cleaned.sql…]()
+[club_member_info_cleaned.sql.sql.zip](https://github.com/user-attachments/files/21793098/club_member_info_cleaned.sql.sql.zip)
+
+
+
