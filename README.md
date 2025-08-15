@@ -43,6 +43,7 @@ SELECT * FROM club_nember_info;
 ```
 
 
+## Clean Data
 In the first step, we should review all the data in the table
 ```sql
 SELECT * 
