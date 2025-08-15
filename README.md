@@ -39,7 +39,7 @@ CREATE TABLE club_member_info_cleaned (
 
 ```sql
 INSERT INTO club_member_info_cleaned
-SELECT * FROM club_nember_info;
+SELECT * FROM club_member_info;
 ```
 
 
