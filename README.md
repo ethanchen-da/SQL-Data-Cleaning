@@ -22,7 +22,8 @@ This is an educational project on data cleaning and preparation using SQL. The o
 Let's generate a new table where we can manipulate and restructure the data without modifying the original dataset
 -- club_member_info definition
 
-/CREATE TABLE club_member_info_cleaned (
+```sql
+CREATE TABLE club_member_info_cleaned (
 	full_name VARCHAR(50),
 	age INTEGER,
 	martial_status VARCHAR(50),
@@ -31,33 +32,37 @@ Let's generate a new table where we can manipulate and restructure the data with
 	full_address NVARCHAR(50),
 	job_title VARCHAR(50),
 	membership_date NVARCHAR(50)
-);/
+);
+```
 
 ## Copy all values from original table
+
+```sql
 INSERT INTO club_member_info_cleaned
 SELECT * FROM club_nember_info;
-
-
-Look around table
 ```
+
+
+In the first step, we should review all the data in the table
+```sql
 SELECT * 
 FROM club_member_info;
 ```
 
 Fix the full_name column — check the result first
-```
+```sql
 SELECT UPPER(SUBSTRING(LTRIM(full_name),1))
 FROM club_member_info;
 ```
 
 Fix, Update and Commit full_name column
-```
+```sql
 UPDATE club_member_info
 SET full_name = UPPER(SUBSTR(LTRIM(full_name), 1));
 ```
 
-Update outlier values
-```
+After that, I noticed that the age column had many missing values or outliers, so I fixed the age column.
+```sql
 WITH mode_val AS 
 (
     SELECT age
@@ -71,8 +76,8 @@ SET age = (SELECT age FROM mode_val)
 WHERE age < 1 OR age > 100; 
 ```
 
-Update marital_status
-```
+After that, I noticed that the martial_status column had many missing values, so I fixed the age column.
+```sql
 WITH update_status AS 
 (
     SELECT martial_status as ms 
@@ -85,21 +90,39 @@ UPDATE club_member_info
 SET  martial_status = (SELECT ms FROM update_status)
 WHERE TRIM(martial_status) IS NULL;
 ```
-
+Then I noticed the phone column also had missing values, so I decided to check the results before updating to make sure nothing gets updated incorrectly.
 ```sql
--- check before update phone
 SELECT
 	CASE 
 		WHEN LENGTH(TRIM(phone)) < 12 THEN 'ERROR'
 		ELSE phone
 	END
 FROM club_member_info;
+```
 
---update val phone columm
+After confirming the above query returned no issues, I ran the update command.
+```sql
 UPDATE club_member_info
 SET phone = 
 	CASE 
 		WHEN LENGTH(TRIM(phone)) < 12 THEN 'ERROR'
 		ELSE phone
+	END;
+```
+
+Check empty values in job_title column
+```sql
+SELECT COUNT(job_title)
+FROM club_member_info
+WHERE LENGTH(TRIM(job_title)) < 1;
+```
+
+Update job_title column
+```sql
+UPDATE club_member_info
+SET job_title =
+	CASE
+		WHEN LENGTH(TRIM(job_title)) < 1 THEN 'No Info'
+		ELSE job_title
 	END;
 ```
