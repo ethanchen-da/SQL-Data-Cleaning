@@ -57,12 +57,14 @@ FROM club_member_info;
 ```
 
 Fix, Update and Commit full_name column
+Result: I will adjust it so that all letters are capitalized and aligned to the left.
 ```sql
 UPDATE club_member_info
 SET full_name = UPPER(SUBSTR(LTRIM(full_name), 1));
 ```
 
 After that, I noticed that the age column had many missing values or outliers, so I fixed the age column.
+Result: I will replace the outliers with the most frequently occurring age, which is 40.
 ```sql
 WITH mode_val AS 
 (
@@ -74,10 +76,11 @@ WITH mode_val AS
 )
 UPDATE club_member_info
 SET age = (SELECT age FROM mode_val)
-WHERE age < 1 OR age > 100; 
+WHERE age < 1 OR age > 100 OR age IS NULL;
 ```
 
 After that, I noticed that the martial_status column had many missing values, so I fixed the age column.
+Result: I will also replace the null values with the most frequently occurring value.
 ```sql
 WITH update_status AS 
 (
@@ -90,6 +93,12 @@ WITH update_status AS
 UPDATE club_member_info
 SET  martial_status = (SELECT ms FROM update_status)
 WHERE TRIM(martial_status) IS NULL;
+```
+However, to ensure that my results are logically consistent, I ran a query to check that individuals under the age of 16 do not have a marital_status of “married” or “divorced.”
+```sql
+SELECT martial_status
+FROM club_member_info
+WHERE age < 16 AND (martial_status IN ('married','divorced'));
 ```
 
 Then I noticed the phone column also had missing values, so I decided to check the results before updating to make sure nothing gets updated incorrectly. For this column, if a value is missing or incorrectly formatted, I’ll set it to 'ERROR' by default.
