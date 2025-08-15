@@ -137,3 +137,5 @@ SET job_title =
 		ELSE job_title
 	END;
 ```
+## Result
+[Uploading Club_member_info_cleaned.sql…]()
